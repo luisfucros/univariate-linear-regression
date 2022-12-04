@@ -1,0 +1,32 @@
+# Run all tests in the test folder
+pytest
+
+# Makes pytest stop after the first failing test
+pytest -x
+
+# Run a specific test class
+Node ID of a test class: <path to test module>::<test class name>
+!pytest models/test_train.py::TestSplitIntoTrainingAndTestingSets
+
+# Run a specific unit test
+Node ID of an unit test: <path to test module>::<test class name>::<unit test name>
+!pytest models/test_train.py::TestSplitIntoTrainingAndTestingSets::test_on_six_rows
+
+# Expected to fail mark (decorator)
+@pytest.mark.xfail(reason="Using TDD, model_test() has not yet been implemented")
+@pytest.mark.xfail
+
+# Conditional skipping mark 
+@pytest.mark.skipif(sys.version_info > (2, 7), reason="Works only on Python 2.7 or lower")
+
+# Reason for skipping
+pytest -r
+
+# Tests that were skipped
+pytest -rs
+
+# Tests that are xfailed along with the reason
+pytest -rx
+
+# Tests xfailed and skipped
+pytest -rsx

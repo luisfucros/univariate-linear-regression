@@ -26,6 +26,7 @@ class TestGetDataAsNumpyArray(object):
     def test_on_clean_file(self, clean_data_file):
         expected = np.array([[201.0, 305671.0], [7892.0, 298140.0], [501.0, 738293.0]])
         actual = get_data_as_numpy_array(clean_data_file, 2)
+        # approx value
         assert actual == pytest.approx(expected), "Expected: {0}, Actual: {1}".format(expected, actual)
 
     def test_on_empty_file(self, empty_file):
