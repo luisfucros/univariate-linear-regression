@@ -4,9 +4,10 @@ import pytest
 
 from data.preprocessing_helpers import convert_to_int, row_to_list, preprocess
 
-
+# setup and teardown
 @pytest.fixture
 def raw_and_clean_data_file(tmpdir):
+    # tmpdir creates a temporary directory during setup and deletes the temporary directory during teardown
     raw_path = tmpdir.join("raw.txt")
     clean_path = tmpdir.join("clean.txt")
     with open(raw_path, "w") as f:
@@ -113,13 +114,16 @@ class TestRowToList(object):
 
 
 class TestPreprocess(object):
+    # mocker argument
     def test_on_raw_data(self, raw_and_clean_data_file, mocker):
         raw_path, clean_path = raw_and_clean_data_file
+        # define mocker bug free function
         row_to_list_mock = mocker.patch("data.preprocessing_helpers.row_to_list", side_effect=row_to_list_bug_free)
         convert_to_int_mock = mocker.patch("data.preprocessing_helpers.convert_to_int",
                                            side_effect=convert_to_int_bug_free
                                            )
         preprocess(raw_path, clean_path)
+        # assert mock
         assert row_to_list_mock.call_args_list == [call("1,801\t201,411\n"),
                                                    call("1,767565,112\n"),
                                                    call("2,002\t333,209\n"),
